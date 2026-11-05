@@ -1,33 +1,32 @@
-# Saurabh AI Creative Hub
+# Saurabh.AICreates — AI Creative Hub
 
-A curated AI creative platform for discovering practical image-generation prompts, video-generation prompts, creative workflows and AI tool resources.
-
-## Product scope
-
-- **Image Prompts:** product photography, portraits, fashion, lifestyle, invitations, festival creatives and social media content.
-- **Video Prompts:** promotional videos, product videos, social media reels, cinematic workflows, camera movements, transitions and motion guidance.
-- **AI Tools:** discover tools such as ChatGPT, Gemini, Google Flow, Veo, Kling and Runway.
-- **Tutorials:** practical guides and prompt-engineering resources.
-- **Admin experience (planned):** manage prompts, video scenes, categories and media without editing code.
-
-Client-specific mythological work, character-design projects and abstract-art work are intentionally outside this product's scope.
+A fast, static-first creative platform for practical AI image prompts, scene-based video-generation workflows, AI tools and creator tutorials.
 
 ## Technology
-
-- ASP.NET Core / Blazor Web App (.NET 8)
-- Interactive Server rendering
-- Responsive custom CSS
+- Next.js 16 + React 19 + TypeScript
+- Static export for fast CDN delivery
+- JSON content files; no database or request-time server required for the public site
+- GitHub Actions with Node.js 22 for type-checking and production builds
+- Responsive custom CSS and Lucide icons
 
 ## Run locally
+Run npm ci, then npm run dev.
+For production verification run npm run typecheck and npm run build.
+The static website is generated into the out directory and can be hosted on Vercel, Cloudflare Pages or any static host.
 
-1. Install the .NET 8 SDK.
-2. Open a terminal in the repository root.
-3. Run:
+## Content
+- content/image-prompts.json — product photography, portrait photography, fashion, lifestyle, invitations, festival and social creatives.
+- content/video-prompts.json — scene-by-scene video workflows with reference paths, image prompts, video prompts, subject movement and camera movement.
+- content/ai-tools.json — AI creative tools directory.
+- content/tutorials.json — creator learning resources.
 
-   ```bash
-   dotnet run --project src/Saurabh.AICreativeHub.Web
-   ```
+Mythological, character-design and abstract-art content is intentionally excluded.
 
-## Current status
+## Content workspace
+The /admin/ route is a static export/download workspace. It previews JSON collections and downloads a selected file. It does not write to GitHub or a deployed server. Never put API keys or tokens in public JSON. A future write-enabled admin requires secure authentication and server-side GitHub integration; never expose a GitHub token in browser code.
 
-The first development increment establishes the Blazor application, responsive landing page, navigation, starter category filters and initial sample cards. Prompt data, detail pages, persistence, authentication and the admin dashboard will be implemented in subsequent increments.
+## Performance
+Static generation for content and detail pages, lightweight client-side search and copy interactions, responsive CSS, and no database calls at visitor request time.
+
+## Legacy
+The previous .NET prototype remains in src/ for reference only. The deployed website and root build are Next.js-based.

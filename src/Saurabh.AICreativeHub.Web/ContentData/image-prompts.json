@@ -1,0 +1,52 @@
+[
+  {
+    "id": "image-product-studio-001",
+    "title": "Studio product photography",
+    "category": "Product Photography",
+    "tool": "ChatGPT",
+    "description": "Polished product visuals with controlled lighting, clean backgrounds and premium composition.",
+    "prompt": "Create a premium commercial product photograph. Preserve the product's exact shape, proportions, material, colours, labels and design. Use a clean studio background, soft controlled lighting, realistic shadows and a refined composition. Do not add distracting objects or alter the product.",
+    "thumbnail": "/media/images/products/studio-product-001.webp",
+    "featured": true
+  },
+  {
+    "id": "image-portrait-editorial-001",
+    "title": "Cinematic portrait lighting",
+    "category": "Portrait Photography",
+    "tool": "Gemini",
+    "description": "Expressive lighting, natural skin texture and editorial framing for portrait concepts.",
+    "prompt": "Create an editorial portrait with natural skin texture, realistic facial detail, expressive cinematic lighting, balanced contrast and a thoughtfully composed background.",
+    "thumbnail": "/media/images/portraits/cinematic-portrait-001.webp",
+    "featured": true
+  },
+  {
+    "id": "image-fashion-editorial-001",
+    "title": "Modern fashion editorial",
+    "category": "Fashion",
+    "tool": "Gemini",
+    "description": "Fashion campaign concepts with styling direction, pose ideas and magazine-inspired framing.",
+    "prompt": "Create a premium fashion editorial image with confident natural posing, detailed fabric texture, intentional styling, sophisticated lighting and magazine-quality composition.",
+    "thumbnail": "/media/images/fashion/editorial-001.webp",
+    "featured": false
+  },
+  {
+    "id": "image-wedding-invite-001",
+    "title": "Elegant wedding invitation",
+    "category": "Wedding Invitations",
+    "tool": "ChatGPT",
+    "description": "Elegant invitation concepts with thoughtful typography, layout and colour direction.",
+    "prompt": "Design an elegant Indian wedding invitation layout with refined typography, balanced spacing, premium paper texture and a harmonious colour palette. Keep all supplied names, dates and venue details exact.",
+    "thumbnail": "/media/images/invitations/wedding-001.webp",
+    "featured": true
+  },
+  {
+    "id": "image-social-campaign-001",
+    "title": "Social media campaign creative",
+    "category": "Social Media Creatives",
+    "tool": "Midjourney",
+    "description": "A consistent visual direction for social campaigns, posts and digital promotions.",
+    "prompt": "Create a scroll-stopping social media campaign visual with a clear focal point, strong visual hierarchy, clean composition and a consistent brand-friendly colour palette.",
+    "thumbnail": "/media/images/social/campaign-001.webp",
+    "featured": false
+  }
+]

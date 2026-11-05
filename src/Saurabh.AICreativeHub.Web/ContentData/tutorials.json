@@ -1,0 +1,4 @@
+[
+  { "id": "tutorial-prompt-basics", "title": "Writing better image prompts", "category": "Image Prompting", "summary": "Learn how to describe the subject, composition, lighting, style and constraints clearly." },
+  { "id": "tutorial-video-scenes", "title": "Plan a video scene by scene", "category": "Video Workflows", "summary": "Turn one video idea into consistent reference frames, image prompts and motion prompts." }
+]

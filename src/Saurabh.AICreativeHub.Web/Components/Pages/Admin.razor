@@ -1,0 +1,19 @@
+@page "/admin"
+@inject Saurabh.AICreativeHub.Web.Services.IContentRepository ContentRepository
+@inject IJSRuntime JS
+<PageTitle>Content Manager | Saurabh.AICreates</PageTitle>
+<section class="section inner-page"><span class="eyebrow">SITE CONTENT WORKSPACE</span><h1>Content <span class="gradient-text">manager.</span></h1><p>Manage the temporary JSON content files without writing code. Download the updated JSON and replace the matching file in the repository to publish your changes.</p>
+<div class="admin-warning"><b>Temporary editor</b><span>This dashboard does not write to GitHub or the live server. It exports JSON files for you to review and add to the repository. Do not paste API keys or passwords here.</span></div>
+<div class="admin-stats"><div><b>@ImageCount</b><span>Image prompts</span></div><div><b>@VideoCount</b><span>Video workflows</span></div><div><b>@ToolCount</b><span>AI tools</span></div><div><b>@TutorialCount</b><span>Tutorials</span></div></div>
+<div class="detail-panel admin-editor"><label class="field-label">Choose content collection</label><select class="field-select" @bind="Selected" @bind:after="Reload"><option value="images">Image prompts</option><option value="videos">Video workflows</option><option value="tools">AI tools</option><option value="tutorials">Tutorials</option></select>
+<label class="field-label">JSON content</label><textarea class="json-editor" @bind="Json" spellcheck="false"></textarea>
+<div class="admin-actions"><button class="button button-primary" @onclick="Download">Download JSON file ↓</button><button class="button button-outline" @onclick="Reload">Discard edits / reload</button></div><span class="copy-note">@Message</span></div>
+</section>
+@code{
+private string Selected="images",Json="",Message="";
+private string Images="[]",Videos="[]",Tools="[]",Tutorials="[]";
+private int ImageCount,VideoCount,ToolCount,TutorialCount;
+protected override async Task OnInitializedAsync(){var a=await ContentRepository.GetImagePromptsAsync();var b=await ContentRepository.GetVideoPromptsAsync();var c=await ContentRepository.GetAiToolsAsync();var d=await ContentRepository.GetTutorialsAsync();ImageCount=a.Count;VideoCount=b.Count;ToolCount=c.Count;TutorialCount=d.Count;Images=System.Text.Json.JsonSerializer.Serialize(a,new System.Text.Json.JsonSerializerOptions(System.Text.Json.JsonSerializerDefaults.Web){WriteIndented=true});Videos=System.Text.Json.JsonSerializer.Serialize(b,new System.Text.Json.JsonSerializerOptions{WriteIndented=true});Tools=System.Text.Json.JsonSerializer.Serialize(c,new System.Text.Json.JsonSerializerOptions{WriteIndented=true});Tutorials=System.Text.Json.JsonSerializer.Serialize(d,new System.Text.Json.JsonSerializerOptions{WriteIndented=true});Reload();}
+private void Reload(){Json=Selected switch{"videos"=>Videos,"tools"=>Tools,"tutorials"=>Tutorials,_=>Images};Message="Loaded current repository content.";}
+private async Task Download(){try{using var doc=System.Text.Json.JsonDocument.Parse(Json);var name=Selected switch{"videos"=>"video-prompts.json","tools"=>"ai-tools.json","tutorials"=>"tutorials.json",_=>"image-prompts.json"};await JS.InvokeVoidAsync("saurabhDownloads.saveText",name,Json);Message=$"{name} downloaded. Replace the matching file in ContentData/."; }catch(System.Text.Json.JsonException ex){Message="Invalid JSON: "+ex.Message;}}
+}

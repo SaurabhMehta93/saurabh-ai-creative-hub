@@ -93,37 +93,57 @@
             <span class="eyebrow">@SelectedPrompt.Category · @SelectedPrompt.Tool</span>
             <h2>@SelectedPrompt.Title</h2>
             <p>@SelectedPrompt.Description</p>
-            <div class="prompt-placeholder">Prompt details will be available when the prompt library and admin content system are connected.</div>
+            <div class="prompt-placeholder">@SelectedPrompt.Prompt</div>
             <button class="button button-primary" @onclick="ClosePreview">Got it</button>
         </section>
     </div>
 }
 
 @code {
+    [Inject] private Saurabh.AICreativeHub.Web.Services.IContentRepository ContentRepository { get; set; } = default!;
+
     private string SearchTerm { get; set; } = string.Empty;
     private string SelectedCategory { get; set; } = "All";
     private PromptItem? SelectedPrompt { get; set; }
+    private List<string> Categories { get; set; } = ["All"];
+    private List<PromptItem> Prompts { get; set; } = [];
 
-    private readonly string[] Categories = ["All", "Product Photography", "Portraits", "Fashion", "Invitations", "Social Media", "Video Creation"];
+    protected override async Task OnInitializedAsync()
+    {
+        var imagePrompts = await ContentRepository.GetImagePromptsAsync();
+        var videoPrompts = await ContentRepository.GetVideoPromptsAsync();
 
-    private readonly List<PromptItem> Prompts =
-    [
-        new("Studio product photography", "Product Photography", "ChatGPT", "IMAGE", "Clean studio", "▧", "product-visual", "Create polished product visuals with controlled lighting, clean backgrounds and premium composition."),
-        new("Cinematic portrait lighting", "Portraits", "Gemini", "IMAGE", "Portrait study", "◉", "portrait-visual", "Explore portrait concepts with expressive lighting, natural skin texture and editorial framing."),
-        new("Modern fashion editorial", "Fashion", "Gemini", "IMAGE", "Editorial look", "✧", "fashion-visual", "Create fashion campaign concepts with styling direction, pose ideas and magazine-inspired framing."),
-        new("Elegant wedding invitation", "Invitations", "ChatGPT", "IMAGE", "Special moments", "◇", "invite-visual", "Develop elegant invitation concepts with thoughtful typography, layout and colour direction."),
-        new("Product launch reel", "Video Creation", "Google Flow", "VIDEO", "Launch sequence", "▶", "video-visual", "Plan a short promotional video with clear scenes, product focus and intentional camera movement."),
-        new("Social media campaign creative", "Social Media", "Kling", "IMAGE", "Campaign ready", "✦", "social-visual", "Create a consistent visual direction for social campaigns, posts and digital promotions.")
-    ];
+        Prompts = imagePrompts.Select(p => new PromptItem(
+                p.Title, p.Category, p.Tool, "IMAGE", p.Category, "▧",
+                VisualClassFor(p.Category), p.Description, p.Prompt))
+            .Concat(videoPrompts.Select(p => new PromptItem(
+                p.Title, p.Category, p.Tool, "VIDEO", p.Category, "▶",
+                "video-visual", p.Description,
+                string.Join(Environment.NewLine + Environment.NewLine,
+                    p.Scenes.Select(s => $"Scene {s.SceneNumber}: {s.Title}" + Environment.NewLine + s.VideoPrompt)))))
+            .ToList();
+
+        Categories = ["All", .. Prompts.Select(p => p.Category).Distinct(StringComparer.OrdinalIgnoreCase).OrderBy(x => x)];
+    }
 
     private IEnumerable<PromptItem> FilteredPrompts => Prompts.Where(p =>
         (SelectedCategory == "All" || p.Category == SelectedCategory) &&
         (string.IsNullOrWhiteSpace(SearchTerm) || $"{p.Title} {p.Description} {p.Category} {p.Tool}".Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)));
+
+    private static string VisualClassFor(string category) => category switch
+    {
+        "Product Photography" => "product-visual",
+        "Portrait Photography" => "portrait-visual",
+        "Fashion" => "fashion-visual",
+        "Wedding Invitations" or "Birthday Invitations" => "invite-visual",
+        "Social Media Creatives" or "Festival Creatives" => "social-visual",
+        _ => "product-visual"
+    };
 
     private void SelectCategory(string category) => SelectedCategory = category;
     private void ClearFilters() { SelectedCategory = "All"; SearchTerm = string.Empty; }
     private void PreviewPrompt(PromptItem prompt) => SelectedPrompt = prompt;
     private void ClosePreview() => SelectedPrompt = null;
 
-    private sealed record PromptItem(string Title, string Category, string Tool, string Type, string VisualCaption, string Symbol, string VisualClass, string Description);
+    private sealed record PromptItem(string Title, string Category, string Tool, string Type, string VisualCaption, string Symbol, string VisualClass, string Description, string Prompt);
 }

@@ -1,0 +1,3 @@
+import type {Metadata} from "next"; import {images} from "@/lib/content"; import {SearchGrid} from "@/components/library";
+export const metadata:Metadata={title:"AI Image Prompts"};
+export default function ImagePromptsPage(){return <main className="page-shell"><div className="container"><div className="page-intro"><div className="eyebrow">THE IMAGE LIBRARY</div><h1>Ideas into <span className="gradient-text">images.</span></h1><p>Practical, adaptable prompts for product photography, portraits, fashion, invitations and social creatives.</p></div><SearchGrid items={images} type="image"/></div></main>}

@@ -7,23 +7,20 @@
             <span>SAURABH<span class="brand-accent">.AI</span>CREATES</span>
         </a>
         <nav class="main-nav" aria-label="Main navigation">
-            <a href="/" class="nav-link active">Explore</a>
+            <a href="/" class="nav-link">Explore</a>
             <a href="/image-prompts" class="nav-link">Image Prompts</a>
             <a href="/video-prompts" class="nav-link">Video Prompts</a>
             <a href="/ai-tools" class="nav-link">AI Tools</a>
             <a href="/tutorials" class="nav-link">Tutorials</a>
         </nav>
-        <a class="button button-small button-outline" href="#discover">Explore library <span aria-hidden="true">↗</span></a>
-        <button class="mobile-menu" aria-label="Open navigation">☰</button>
+        <a class="button button-small button-outline" href="/admin">Content manager <span aria-hidden="true">↗</span></a>
+        <details class="mobile-nav"><summary aria-label="Open navigation">☰</summary><nav><a href="/">Explore</a><a href="/image-prompts">Image Prompts</a><a href="/video-prompts">Video Prompts</a><a href="/ai-tools">AI Tools</a><a href="/tutorials">Tutorials</a><a href="/admin">Content manager</a></nav></details>
     </header>
-
-    <main>
-        @Body
-    </main>
-
+    <main>@Body</main>
     <footer class="footer">
         <a class="brand footer-brand" href="/"><span class="brand-mark">✦</span><span>SAURABH<span class="brand-accent">.AI</span>CREATES</span></a>
         <p>Ideas into images. Prompts into motion.</p>
+        <div class="footer-links"><a href="/image-prompts">Images</a><a href="/video-prompts">Videos</a><a href="/ai-tools">AI tools</a><a href="/tutorials">Tutorials</a><a href="/admin">Admin</a></div>
         <span class="footer-copy">© @DateTime.Now.Year Saurabh.AICreates</span>
     </footer>
 </div>

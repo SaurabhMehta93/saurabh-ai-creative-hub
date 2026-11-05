@@ -1,0 +1,7 @@
+"use client";
+import Link from "next/link";
+import {useState} from "react";
+import {Menu, X, Sparkles} from "lucide-react";
+const links=[["/image-prompts/","Image Prompts"],["/video-prompts/","Video Prompts"],["/ai-tools/","AI Tools"],["/tutorials/","Tutorials"]];
+export function SiteHeader(){const [open,setOpen]=useState(false);return <header className="site-header"><div className="nav-shell"><Link href="/" className="brand" onClick={()=>setOpen(false)}><span className="brand-mark"><Sparkles size={18}/></span><span>SAURABH<span className="brand-dot">.</span>AI<span className="brand-muted">CREATES</span></span></Link><nav className={open?"main-nav nav-open":"main-nav"}>{links.map(([href,label])=><Link key={href} href={href} onClick={()=>setOpen(false)}>{label}</Link>)}<Link className="nav-cta" href="/image-prompts/" onClick={()=>setOpen(false)}>Explore library ↗</Link></nav><button className="menu-toggle" onClick={()=>setOpen(!open)} aria-label="Toggle navigation">{open?<X/>:<Menu/>}</button></div></header>}
+export function SiteFooter(){return <footer className="site-footer"><div className="footer-inner"><div><Link href="/" className="footer-brand">SAURABH<span>.</span>AICREATES</Link><p>Make ideas visible. Create with intention.</p></div><div className="footer-links">{links.map(([href,label])=><Link key={href} href={href}>{label}</Link>)}</div><small>© 2026 Saurabh.AICreates</small></div></footer>}

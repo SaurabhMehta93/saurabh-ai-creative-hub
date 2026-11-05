@@ -1,0 +1,41 @@
+[
+  {
+    "id": "video-product-launch-001",
+    "title": "Product launch reel",
+    "category": "Product Videos",
+    "tool": "Google Flow",
+    "description": "A short product-focused launch video with a clear opening, detail shots and a polished ending.",
+    "durationSeconds": 15,
+    "aspectRatio": "9:16",
+    "thumbnail": "/media/videos/thumbnails/product-launch-001.webp",
+    "scenes": [
+      {
+        "sceneNumber": 1,
+        "title": "Opening hero frame",
+        "referenceImage": "/media/images/video-references/product-launch-scene-01.webp",
+        "imagePrompt": "Create a clean hero frame featuring the supplied product exactly as it is. Keep its design unchanged and use a premium uncluttered studio setting.",
+        "videoPrompt": "Begin with the product already in frame. Let soft studio light reveal its surface while the background remains calm. Keep the product design perfectly consistent.",
+        "subjectMovement": "The product remains stationary; only subtle light reflections change.",
+        "cameraMovement": "Slow cinematic push-in, perfectly stable."
+      },
+      {
+        "sceneNumber": 2,
+        "title": "Product detail shot",
+        "referenceImage": "/media/images/video-references/product-launch-scene-02.webp",
+        "imagePrompt": "Create a close-up reference showing the product's real material, finish and details without modifying any feature.",
+        "videoPrompt": "Move into a close-up view and reveal the product details with realistic reflections and smooth motion. No morphing or redesign.",
+        "subjectMovement": "No product movement; preserve exact shape and details.",
+        "cameraMovement": "Smooth controlled side slider movement."
+      },
+      {
+        "sceneNumber": 3,
+        "title": "Final presentation",
+        "referenceImage": "/media/images/video-references/product-launch-scene-03.webp",
+        "imagePrompt": "Create a final premium product composition with generous negative space for optional campaign text.",
+        "videoPrompt": "Ease into the final hero composition and hold the product clearly in focus for the closing moment.",
+        "subjectMovement": "Product remains still and centred.",
+        "cameraMovement": "Gentle pull-back followed by a steady hold."
+      }
+    ]
+  }
+]

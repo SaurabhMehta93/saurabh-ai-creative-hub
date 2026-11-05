@@ -1,0 +1,9 @@
+[
+  { "id": "chatgpt", "name": "ChatGPT", "category": "Text & Image", "description": "Prompt writing, ideation and creative assistance.", "websiteUrl": "https://chatgpt.com/" },
+  { "id": "gemini", "name": "Gemini", "category": "Text & Image", "description": "Creative ideation and image-generation workflows.", "websiteUrl": "https://gemini.google.com/" },
+  { "id": "google-flow", "name": "Google Flow", "category": "Video", "description": "AI-assisted cinematic video creation.", "websiteUrl": "https://labs.google/fx/tools/flow" },
+  { "id": "veo", "name": "Veo", "category": "Video", "description": "Generative video creation from Google.", "websiteUrl": "https://deepmind.google/models/veo/" },
+  { "id": "kling", "name": "Kling AI", "category": "Video", "description": "AI video generation and motion workflows.", "websiteUrl": "https://klingai.com/" },
+  { "id": "runway", "name": "Runway", "category": "Video", "description": "AI-powered video and creative production tools.", "websiteUrl": "https://runwayml.com/" },
+  { "id": "midjourney", "name": "Midjourney", "category": "Image", "description": "AI image creation and visual exploration.", "websiteUrl": "https://www.midjourney.com/" }
+]
