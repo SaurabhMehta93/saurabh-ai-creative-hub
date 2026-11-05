@@ -38,3 +38,30 @@
  .theme-toggle-icon{font-size:initial}
  :root[data-theme="dark"] .main-nav{background:#151e18;border-color:#303c33}
 }
+
+/* Official supplied brand mark */
+.brand{gap:11px}
+.brand-logo{width:44px;height:44px;object-fit:cover;border-radius:50%;display:block;flex:0 0 auto}
+.footer-brand-lockup{display:flex;align-items:center;gap:13px}
+.footer-logo{width:58px;height:58px;object-fit:cover;border-radius:50%;display:block}
+.hero-brand-logo{width:100px;height:100px;object-fit:cover;border-radius:50%;display:block;box-shadow:0 8px 28px #0005}
+.visual-center{width:132px;height:152px;border-radius:18px;background:transparent;box-shadow:none;gap:7px}
+.visual-center span{color:#d8ff9c;font-size:8px;text-shadow:0 2px 8px #000}
+.video-showcase-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.video-showcase-card{display:grid;grid-template-columns:1.05fr 1fr;min-height:220px;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:14px;transition:.2s}
+.video-showcase-card:hover{transform:translateY(-4px);box-shadow:0 15px 35px #1b342012}
+.video-showcase-art{position:relative;min-height:220px;display:grid;place-items:center;background:radial-gradient(circle at 52% 42%,#d5e6be,#91a77c 50%,#304638)}
+.video-showcase-card:nth-child(2) .video-showcase-art{background:radial-gradient(circle at 52% 42%,#e7d6b5,#a98759 50%,#43372a)}
+.video-showcase-index,.video-showcase-duration{position:absolute;left:15px;color:#fff;font-size:8px;letter-spacing:.14em;font-weight:700;text-shadow:0 2px 8px #000}
+.video-showcase-index{top:15px}
+.video-showcase-duration{bottom:15px}
+.video-play{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:#ffffffdf;color:#263c2b;box-shadow:0 8px 24px #0003}
+.video-showcase-copy{padding:22px;display:flex;flex-direction:column;justify-content:center}
+.video-showcase-copy>span{font-size:9px;color:#70934e;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.video-showcase-copy h3{font:600 20px 'Space Grotesk';margin:9px 0}
+.video-showcase-copy p{font-size:11px;line-height:1.7;color:var(--muted);margin:0}
+.video-showcase-copy b{display:flex;align-items:center;gap:7px;margin-top:17px;font-size:10px;color:#5b9132}
+:root[data-theme="dark"] .video-showcase-card{background:#1b241e;border-color:#303c33}
+:root[data-theme="dark"] .video-showcase-copy p{color:#a6b1a8}
+@media(max-width:900px){.video-showcase-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.brand-logo{width:38px;height:38px}.footer-logo{width:52px;height:52px}.video-showcase-card{grid-template-columns:1fr}.video-showcase-art{min-height:190px}.visual-center{width:124px;height:145px}}
