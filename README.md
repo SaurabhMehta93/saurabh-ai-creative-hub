@@ -3,7 +3,7 @@
 A fast, static-first creative platform for practical AI image prompts, scene-based video-generation workflows, AI tools and creator tutorials.
 
 ## Technology
-- Next.js 15 + React 19 + TypeScript
+- Next.js 16 + React 19 + TypeScript
 - Static export for fast CDN delivery
 - JSON content files; no database or request-time server required for the public site
 - GitHub Actions with Node.js 22 for type-checking and production builds
