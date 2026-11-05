@@ -1,0 +1,3 @@
+import type {Metadata} from "next"; import {videos} from "@/lib/content"; import {SearchGrid} from "@/components/library";
+export const metadata:Metadata={title:"AI Video Workflows"};
+export default function VideoPromptsPage(){return <main className="page-shell"><div className="container"><div className="page-intro"><div className="eyebrow">SCENE-BY-SCENE VIDEO WORKFLOWS</div><h1>Make every frame <span className="gradient-text">count.</span></h1><p>Structured video plans with reference frames, image prompts, motion direction and camera movement.</p></div><SearchGrid items={videos} type="video"/></div></main>}
