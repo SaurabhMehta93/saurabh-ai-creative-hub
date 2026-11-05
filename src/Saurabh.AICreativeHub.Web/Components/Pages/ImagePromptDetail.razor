@@ -1,0 +1,23 @@
+@page "/image-prompts/{Id}"
+@inject Saurabh.AICreativeHub.Web.Services.IContentRepository ContentRepository
+@inject IJSRuntime JS
+<PageTitle>@(Item?.Title ?? "Image Prompt") | Saurabh.AICreates</PageTitle>
+<section class="section inner-page">
+    <a class="text-link" href="/image-prompts">← All image prompts</a>
+    @if(Item is null){<div class="empty-results"><h2>Prompt not found</h2><a href="/image-prompts">Back to image prompts</a></div>}
+    else {
+        <span class="eyebrow">IMAGE PROMPT · @Item.Category</span><h1>@Item.Title</h1><p>@Item.Description</p>
+        <div class="detail-layout">
+            <div class="detail-preview @Visual(Item.Category)">@if(!string.IsNullOrWhiteSpace(Item.Thumbnail)){<img src="@Item.Thumbnail" alt="@Item.Title" onerror="this.style.display='none'"/>}<span>✦</span></div>
+            <div class="detail-panel"><div class="detail-meta"><span>@Item.Tool</span><span>@Item.Category</span></div><h2>Ready-to-use prompt</h2><pre class="prompt-text">@Item.Prompt</pre><button class="button button-primary" @onclick="Copy">Copy prompt <span>⧉</span></button><span class="copy-note">@Message</span></div>
+        </div>
+    }
+</section>
+@code {
+    [Parameter] public string Id {get;set;} = "";
+    private Saurabh.AICreativeHub.Web.Models.ImagePrompt? Item;
+    private string Message="";
+    protected override async Task OnParametersSetAsync()=>Item=(await ContentRepository.GetImagePromptsAsync()).FirstOrDefault(x=>x.Id==Id);
+    private async Task Copy(){if(Item is not null){await JS.InvokeVoidAsync("navigator.clipboard.writeText",Item.Prompt);Message="Prompt copied.";}}
+    private static string Visual(string c)=>c switch{"Product Photography"=>"product-visual","Portrait Photography"=>"portrait-visual","Fashion"=>"fashion-visual","Wedding Invitations" or "Birthday Invitations"=>"invite-visual","Social Media Creatives" or "Festival Creatives"=>"social-visual",_=>"product-visual"};
+}
