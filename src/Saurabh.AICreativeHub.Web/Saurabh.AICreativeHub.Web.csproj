@@ -4,9 +4,4 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Content Include="ContentData/**/*.json" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="ContentData/**/*.md" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
 </Project>
