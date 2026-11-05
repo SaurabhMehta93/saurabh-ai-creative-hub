@@ -1,14 +1,15 @@
 # Saurabh AI Creative Hub
 
-A curated AI creative platform for discovering practical image-generation prompts, video-generation prompts, creative workflows and AI tool resources.
+A curated creative platform for practical AI image prompts, scene-based video-generation workflows, AI tools and creator tutorials.
 
 ## Product scope
 
-- **Image Prompts:** product photography, portraits, fashion, lifestyle, invitations, festival creatives and social media content.
-- **Video Prompts:** promotional videos, product videos, social media reels, cinematic workflows, camera movements, transitions and motion guidance.
-- **AI Tools:** discover tools such as ChatGPT, Gemini, Google Flow, Veo, Kling and Runway.
-- **Tutorials:** practical guides and prompt-engineering resources.
-- **Admin experience (planned):** manage prompts, video scenes, categories and media without editing code.
+- **Image prompts:** product photography, portrait photography, fashion, lifestyle, wedding and birthday invitations, festival creatives and social media creatives.
+- **Video workflows:** product videos, promotional videos, social reels, cinematic videos, camera movements, transitions and motion effects.
+- **Scene details:** each video scene can contain a reference image, image prompt, video prompt, subject movement and camera movement.
+- **AI tools:** a directory of creative tools such as ChatGPT, Gemini, Google Flow, Veo, Kling, Runway and Midjourney.
+- **Tutorials:** prompt-writing and creative workflow learning resources.
+- **Content workspace:** a JSON editor/export screen at `/admin` for preparing updated content files.
 
 Client-specific mythological work, character-design projects and abstract-art work are intentionally outside this product's scope.
 
@@ -16,9 +17,44 @@ Client-specific mythological work, character-design projects and abstract-art wo
 
 - ASP.NET Core / Blazor Web App (.NET 8)
 - Interactive Server rendering
+- JSON-backed temporary content repository
 - Responsive custom CSS
-- Temporary JSON-backed content repository (`ContentData/`)
-- Local media asset folders under `wwwroot/media/`
+
+## Content structure
+
+```
+src/Saurabh.AICreativeHub.Web/
+├── ContentData/
+│   ├── image-prompts.json
+│   ├── video-prompts.json
+│   ├── ai-tools.json
+│   └── tutorials.json
+├── Models/
+├── Services/
+│   ├── IContentRepository.cs
+│   └── JsonContentRepository.cs
+├── Components/
+│   ├── Layout/
+│   └── Pages/
+└── wwwroot/
+    ├── css/
+    ├── js/
+    └── media/
+        ├── images/
+        └── videos/
+```
+
+The UI reads content through `IContentRepository`. The current implementation reads JSON files from `ContentData/`. A database-backed implementation can replace this repository later without changing the page components.
+
+## Media
+
+Use relative paths beginning with `/media/` for local images and video assets, or use full HTTPS URLs for externally hosted media. Keep large video files on suitable external media storage rather than committing them to Git.
+
+## Content workspace notes
+
+The `/admin` page currently edits JSON in the browser and downloads the selected JSON file. It does not write to GitHub or directly update a deployed site. Review the downloaded file and replace the corresponding file in `ContentData/` through a Git commit/PR.
+
+This temporary editor is not an authenticated production admin system. Do not put secrets, API keys or private content in the JSON files. A secure admin login and server-side persistence should be added when a proper hosting/database environment is selected.
 
 ## Run locally
 
@@ -30,6 +66,13 @@ Client-specific mythological work, character-design projects and abstract-art wo
    dotnet run --project src/Saurabh.AICreativeHub.Web
    ```
 
-## Current status
+## Current implementation
 
-The first development increment establishes the Blazor application, responsive landing page, navigation, starter category filters and initial sample cards. The homepage now reads starter image and video prompt records from JSON files through `IContentRepository`. AI tool and tutorial data files are also in place. Media folders are ready for local image/video assets. This is temporary file-based storage; there is no SQL/database server yet. The repository interface is designed so a database-backed implementation can replace the JSON implementation later. Admin editing, authentication and full detail pages remain future work.
+- Responsive homepage with search, category filtering and starter prompt previews.
+- Searchable image prompt listing and individual prompt details with copy.
+- Searchable video workflow listing and scene-by-scene details with per-prompt and copy-all actions.
+- AI tools directory and tutorial listing.
+- JSON content repository and media folder structure.
+- Temporary content workspace with JSON validation and download/export.
+
+The project still needs a successful .NET build/run verification and real media assets before it is production-ready.
