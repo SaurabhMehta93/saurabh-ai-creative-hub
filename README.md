@@ -1,78 +1,32 @@
-# Saurabh AI Creative Hub
+# Saurabh.AICreates — AI Creative Hub
 
-A curated creative platform for practical AI image prompts, scene-based video-generation workflows, AI tools and creator tutorials.
-
-## Product scope
-
-- **Image prompts:** product photography, portrait photography, fashion, lifestyle, wedding and birthday invitations, festival creatives and social media creatives.
-- **Video workflows:** product videos, promotional videos, social reels, cinematic videos, camera movements, transitions and motion effects.
-- **Scene details:** each video scene can contain a reference image, image prompt, video prompt, subject movement and camera movement.
-- **AI tools:** a directory of creative tools such as ChatGPT, Gemini, Google Flow, Veo, Kling, Runway and Midjourney.
-- **Tutorials:** prompt-writing and creative workflow learning resources.
-- **Content workspace:** a JSON editor/export screen at `/admin` for preparing updated content files.
-
-Client-specific mythological work, character-design projects and abstract-art work are intentionally outside this product's scope.
+A fast, static-first creative platform for practical AI image prompts, scene-based video-generation workflows, AI tools and creator tutorials.
 
 ## Technology
-
-- ASP.NET Core / Blazor Web App (.NET 8)
-- Interactive Server rendering
-- JSON-backed temporary content repository
-- Responsive custom CSS
-
-## Content structure
-
-```
-src/Saurabh.AICreativeHub.Web/
-├── ContentData/
-│   ├── image-prompts.json
-│   ├── video-prompts.json
-│   ├── ai-tools.json
-│   └── tutorials.json
-├── Models/
-├── Services/
-│   ├── IContentRepository.cs
-│   └── JsonContentRepository.cs
-├── Components/
-│   ├── Layout/
-│   └── Pages/
-└── wwwroot/
-    ├── css/
-    ├── js/
-    └── media/
-        ├── images/
-        └── videos/
-```
-
-The UI reads content through `IContentRepository`. The current implementation reads JSON files from `ContentData/`. A database-backed implementation can replace this repository later without changing the page components.
-
-## Media
-
-Use relative paths beginning with `/media/` for local images and video assets, or use full HTTPS URLs for externally hosted media. Keep large video files on suitable external media storage rather than committing them to Git.
-
-## Content workspace notes
-
-The `/admin` page currently edits JSON in the browser and downloads the selected JSON file. It does not write to GitHub or directly update a deployed site. Review the downloaded file and replace the corresponding file in `ContentData/` through a Git commit/PR.
-
-This temporary editor is not an authenticated production admin system. Do not put secrets, API keys or private content in the JSON files. A secure admin login and server-side persistence should be added when a proper hosting/database environment is selected.
+- Next.js 15 + React 19 + TypeScript
+- Static export for fast CDN delivery
+- JSON content files; no database or request-time server required for the public site
+- GitHub Actions with Node.js 22 for type-checking and production builds
+- Responsive custom CSS and Lucide icons
 
 ## Run locally
+Run npm ci, then npm run dev.
+For production verification run npm run typecheck and npm run build.
+The static website is generated into the out directory and can be hosted on Vercel, Cloudflare Pages or any static host.
 
-1. Install the .NET 8 SDK.
-2. Open a terminal in the repository root.
-3. Run:
+## Content
+- content/image-prompts.json — product photography, portrait photography, fashion, lifestyle, invitations, festival and social creatives.
+- content/video-prompts.json — scene-by-scene video workflows with reference paths, image prompts, video prompts, subject movement and camera movement.
+- content/ai-tools.json — AI creative tools directory.
+- content/tutorials.json — creator learning resources.
 
-   ```bash
-   dotnet run --project src/Saurabh.AICreativeHub.Web
-   ```
+Mythological, character-design and abstract-art content is intentionally excluded.
 
-## Current implementation
+## Content workspace
+The /admin/ route is a static export/download workspace. It previews JSON collections and downloads a selected file. It does not write to GitHub or a deployed server. Never put API keys or tokens in public JSON. A future write-enabled admin requires secure authentication and server-side GitHub integration; never expose a GitHub token in browser code.
 
-- Responsive homepage with search, category filtering and starter prompt previews.
-- Searchable image prompt listing and individual prompt details with copy.
-- Searchable video workflow listing and scene-by-scene details with per-prompt and copy-all actions.
-- AI tools directory and tutorial listing.
-- JSON content repository and media folder structure.
-- Temporary content workspace with JSON validation and download/export.
+## Performance
+Static generation for content and detail pages, lightweight client-side search and copy interactions, responsive CSS, and no database calls at visitor request time.
 
-The project still needs a successful .NET build/run verification and real media assets before it is production-ready.
+## Legacy
+The previous .NET prototype remains in src/ for reference only. The deployed website and root build are Next.js-based.
