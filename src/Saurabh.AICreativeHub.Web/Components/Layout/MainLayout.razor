@@ -1,0 +1,29 @@
+@inherits LayoutComponentBase
+
+<div class="site-shell">
+    <header class="topbar">
+        <a class="brand" href="/" aria-label="Saurabh AI Creative Hub home">
+            <span class="brand-mark">✦</span>
+            <span>SAURABH<span class="brand-accent">.AI</span>CREATES</span>
+        </a>
+        <nav class="main-nav" aria-label="Main navigation">
+            <a href="/" class="nav-link active">Explore</a>
+            <a href="/image-prompts" class="nav-link">Image Prompts</a>
+            <a href="/video-prompts" class="nav-link">Video Prompts</a>
+            <a href="/ai-tools" class="nav-link">AI Tools</a>
+            <a href="/tutorials" class="nav-link">Tutorials</a>
+        </nav>
+        <a class="button button-small button-outline" href="#discover">Explore library <span aria-hidden="true">↗</span></a>
+        <button class="mobile-menu" aria-label="Open navigation">☰</button>
+    </header>
+
+    <main>
+        @Body
+    </main>
+
+    <footer class="footer">
+        <a class="brand footer-brand" href="/"><span class="brand-mark">✦</span><span>SAURABH<span class="brand-accent">.AI</span>CREATES</span></a>
+        <p>Ideas into images. Prompts into motion.</p>
+        <span class="footer-copy">© @DateTime.Now.Year Saurabh.AICreates</span>
+    </footer>
+</div>
