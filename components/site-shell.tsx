@@ -2,7 +2,7 @@
 import Link from "next/link";
 import {useEffect,useState} from "react";
 import {Menu, X, Moon, Sun} from "lucide-react";
-import logo from "@/lib/logo-data";
+const logo = process.env.NODE_ENV === "production" ? "/saurabh-ai-creative-hub/media/saurabh-aicreates-logo.png" : "/media/saurabh-aicreates-logo.png";
 const links=[["/image-prompts/","Image Prompts"],["/video-prompts/","Video Prompts"],["/ai-tools/","AI Tools"],["/tutorials/","Tutorials"]];
 export function SiteHeader(){
  const [open,setOpen]=useState(false);const [dark,setDark]=useState(false);
