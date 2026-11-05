@@ -1,0 +1,130 @@
+@page "/"
+@rendermode InteractiveServer
+
+<PageTitle>Explore AI Prompts | Saurabh.AICreates</PageTitle>
+
+<section class="hero">
+    <div class="hero-glow hero-glow-one"></div>
+    <div class="hero-glow hero-glow-two"></div>
+    <div class="hero-content">
+        <span class="eyebrow"><span class="eyebrow-dot"></span> YOUR CREATIVE AI PLAYGROUND</span>
+        <h1>Make something<br /><span class="gradient-text">extraordinary.</span></h1>
+        <p class="hero-copy">Discover ready-to-use prompts, creative workflows and ideas to get more out of AI image and video tools.</p>
+        <div class="hero-search">
+            <span class="search-icon">⌕</span>
+            <input @bind="SearchTerm" @bind:event="oninput" placeholder="Search prompts, styles, tools..." aria-label="Search prompts" />
+            <button class="button button-primary" @onclick="ScrollToLibrary">Explore prompts <span>→</span></button>
+        </div>
+        <div class="hero-meta"><span><i></i> Curated creative workflows</span><span>Image + Video</span><span>Made for creators</span></div>
+    </div>
+    <div class="hero-art" aria-label="Abstract gradient artwork">
+        <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+        <div class="art-core"><span>✦</span></div>
+        <div class="floating-tag tag-image">▧ &nbsp; IMAGE PROMPTS</div>
+        <div class="floating-tag tag-video">▶ &nbsp; VIDEO PROMPTS</div>
+        <div class="floating-tag tag-ai">✧ &nbsp; CREATE WITH AI</div>
+    </div>
+    <div class="hero-bottom-line"></div>
+</section>
+
+<section class="trust-strip">
+    <span>CREATE WITH YOUR FAVOURITE TOOLS</span>
+    <div class="tool-names"><b>ChatGPT</b><b>Gemini</b><b>Google Flow</b><b>Veo</b><b>Kling</b><b>Runway</b></div>
+</section>
+
+<section class="section" id="discover">
+    <div class="section-heading">
+        <div><span class="eyebrow">FIND YOUR NEXT IDEA</span><h2>Explore the library<span class="heading-period">.</span></h2><p>Practical prompts and workflows, organised for the way you create.</p></div>
+        <a class="text-link" href="/image-prompts">View all prompts <span>↗</span></a>
+    </div>
+
+    <div class="category-row">
+        @foreach (var category in Categories)
+        {
+            <button class="filter-chip @(SelectedCategory == category ? "selected" : "")" @onclick="() => SelectCategory(category)">@category</button>
+        }
+    </div>
+
+    <div class="library-toolbar">
+        <span class="result-count">@(FilteredPrompts.Count()) creative ideas</span>
+        <span class="toolbar-note">A starter collection · More coming soon</span>
+    </div>
+
+    <div class="prompt-grid">
+        @foreach (var prompt in FilteredPrompts)
+        {
+            <article class="prompt-card">
+                <div class="prompt-visual @prompt.VisualClass">
+                    <span class="visual-label">@prompt.Type</span>
+                    <span class="visual-symbol">@prompt.Symbol</span>
+                    <span class="visual-caption">@prompt.VisualCaption</span>
+                </div>
+                <div class="prompt-card-body">
+                    <div class="card-meta"><span>@prompt.Category</span><span>@prompt.Tool</span></div>
+                    <h3>@prompt.Title</h3>
+                    <p>@prompt.Description</p>
+                    <button class="card-action" @onclick="() => PreviewPrompt(prompt)">Explore prompt <span>↗</span></button>
+                </div>
+            </article>
+        }
+    </div>
+    @if (!FilteredPrompts.Any())
+    {
+        <div class="empty-results"><span>⌕</span><h3>No prompts found</h3><p>Try another keyword or choose a different category.</p><button class="text-link" @onclick="ClearFilters">Clear filters</button></div>
+    }
+</section>
+
+<section class="split-feature">
+    <div class="feature-copy"><span class="eyebrow">FROM STILL TO MOTION</span><h2>Not just prompts.<br /><span class="gradient-text">Complete workflows.</span></h2><p>Build stronger AI videos with scene-by-scene prompts, visual references, camera directions and motion guidance — all organised in one place.</p><a class="button button-primary" href="/video-prompts">Explore video workflows <span>→</span></a></div>
+    <div class="workflow-preview">
+        <div class="workflow-top"><span class="workflow-dot"></span><span class="workflow-dot"></span><span class="workflow-dot"></span><span class="workflow-title">VIDEO WORKFLOW / 01</span></div>
+        <div class="workflow-scenes"><div class="scene scene-one"><b>01</b><span>OPENING FRAME</span></div><div class="scene scene-two"><b>02</b><span>CAMERA MOTION</span></div><div class="scene scene-three"><b>03</b><span>FINAL SHOT</span></div></div>
+        <div class="workflow-footer"><span>Scene-by-scene structure</span><span class="workflow-status">● READY TO CREATE</span></div>
+    </div>
+</section>
+
+<section class="bottom-cta"><span class="eyebrow">KEEP YOUR CREATIVE FLOW GOING</span><h2>Your next great idea<br />starts with a prompt.</h2><a href="#discover" class="button button-light">Browse the library <span>→</span></a></section>
+
+@if (SelectedPrompt is not null)
+{
+    <div class="modal-backdrop" @onclick="ClosePreview">
+        <section class="prompt-modal" @onclick:stopPropagation="true">
+            <button class="modal-close" @onclick="ClosePreview" aria-label="Close">×</button>
+            <span class="eyebrow">@SelectedPrompt.Category · @SelectedPrompt.Tool</span>
+            <h2>@SelectedPrompt.Title</h2>
+            <p>@SelectedPrompt.Description</p>
+            <div class="prompt-placeholder">Prompt details will be available when the prompt library and admin content system are connected.</div>
+            <button class="button button-primary" @onclick="ClosePreview">Got it</button>
+        </section>
+    </div>
+}
+
+@code {
+    private string SearchTerm { get; set; } = string.Empty;
+    private string SelectedCategory { get; set; } = "All";
+    private PromptItem? SelectedPrompt { get; set; }
+
+    private readonly string[] Categories = ["All", "Product Photography", "Portraits", "Fashion", "Invitations", "Social Media", "Video Creation"];
+
+    private readonly List<PromptItem> Prompts =
+    [
+        new("Studio product photography", "Product Photography", "ChatGPT", "IMAGE", "Clean studio", "▧", "product-visual", "Create polished product visuals with controlled lighting, clean backgrounds and premium composition."),
+        new("Cinematic portrait lighting", "Portraits", "Gemini", "IMAGE", "Portrait study", "◉", "portrait-visual", "Explore portrait concepts with expressive lighting, natural skin texture and editorial framing."),
+        new("Modern fashion editorial", "Fashion", "Gemini", "IMAGE", "Editorial look", "✧", "fashion-visual", "Create fashion campaign concepts with styling direction, pose ideas and magazine-inspired framing."),
+        new("Elegant wedding invitation", "Invitations", "ChatGPT", "IMAGE", "Special moments", "◇", "invite-visual", "Develop elegant invitation concepts with thoughtful typography, layout and colour direction."),
+        new("Product launch reel", "Video Creation", "Google Flow", "VIDEO", "Launch sequence", "▶", "video-visual", "Plan a short promotional video with clear scenes, product focus and intentional camera movement."),
+        new("Social media campaign creative", "Social Media", "Kling", "IMAGE", "Campaign ready", "✦", "social-visual", "Create a consistent visual direction for social campaigns, posts and digital promotions.")
+    ];
+
+    private IEnumerable<PromptItem> FilteredPrompts => Prompts.Where(p =>
+        (SelectedCategory == "All" || p.Category == SelectedCategory) &&
+        (string.IsNullOrWhiteSpace(SearchTerm) || $"{p.Title} {p.Description} {p.Category} {p.Tool}".Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)));
+
+    private void SelectCategory(string category) => SelectedCategory = category;
+    private void ClearFilters() { SelectedCategory = "All"; SearchTerm = string.Empty; }
+    private void PreviewPrompt(PromptItem prompt) => SelectedPrompt = prompt;
+    private void ClosePreview() => SelectedPrompt = null;
+    private void ScrollToLibrary() => SelectedCategory = "All";
+
+    private sealed record PromptItem(string Title, string Category, string Tool, string Type, string VisualCaption, string Symbol, string VisualClass, string Description);
+}
