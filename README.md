@@ -1,2 +1,33 @@
-# saurabh-ai-creative-hub
-An AI Creative Hub featuring curated AI image prompts, video generation prompts, character references, scene-by-scene workflows, and creative resources for tools like ChatGPT, Gemini, Google Flow, Veo, and Kling.
+# Saurabh AI Creative Hub
+
+A curated AI creative platform for discovering practical image-generation prompts, video-generation prompts, creative workflows and AI tool resources.
+
+## Product scope
+
+- **Image Prompts:** product photography, portraits, fashion, lifestyle, invitations, festival creatives and social media content.
+- **Video Prompts:** promotional videos, product videos, social media reels, cinematic workflows, camera movements, transitions and motion guidance.
+- **AI Tools:** discover tools such as ChatGPT, Gemini, Google Flow, Veo, Kling and Runway.
+- **Tutorials:** practical guides and prompt-engineering resources.
+- **Admin experience (planned):** manage prompts, video scenes, categories and media without editing code.
+
+Client-specific mythological work, character-design projects and abstract-art work are intentionally outside this product's scope.
+
+## Technology
+
+- ASP.NET Core / Blazor Web App (.NET 8)
+- Interactive Server rendering
+- Responsive custom CSS
+
+## Run locally
+
+1. Install the .NET 8 SDK.
+2. Open a terminal in the repository root.
+3. Run:
+
+   ```bash
+   dotnet run --project src/Saurabh.AICreativeHub.Web
+   ```
+
+## Current status
+
+The first development increment establishes the Blazor application, responsive landing page, navigation, starter category filters and initial sample cards. Prompt data, detail pages, persistence, authentication and the admin dashboard will be implemented in subsequent increments.
