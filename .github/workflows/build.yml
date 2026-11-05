@@ -3,6 +3,7 @@ on:
   push:
     branches: [main, feature/nextjs-fast-site]
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
     branches: [main]
 permissions:
   contents: read
@@ -17,8 +18,8 @@ jobs:
     env:
       GITHUB_PAGES: "true"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
       - uses: actions/configure-pages@v5
@@ -27,7 +28,7 @@ jobs:
       - run: npm install
       - run: npm run typecheck
       - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: out/
   deploy:
