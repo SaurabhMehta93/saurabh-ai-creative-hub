@@ -1,0 +1,33 @@
+@page "/video-prompts/{Id}"
+@inject Saurabh.AICreativeHub.Web.Services.IContentRepository ContentRepository
+@inject IJSRuntime JS
+<PageTitle>@(Item?.Title ?? "Video Workflow") | Saurabh.AICreates</PageTitle>
+<section class="section inner-page">
+<a class="text-link" href="/video-prompts">← All video workflows</a>
+@if(Item is null){<div class="empty-results"><h2>Workflow not found</h2><a href="/video-prompts">Back to video workflows</a></div>}
+else {
+<span class="eyebrow">VIDEO WORKFLOW · @Item.Category</span><h1>@Item.Title</h1><p>@Item.Description</p>
+<div class="workflow-info"><span><b>AI TOOL</b>@Item.Tool</span><span><b>DURATION</b>@Item.DurationSeconds seconds</span><span><b>ASPECT RATIO</b>@Item.AspectRatio</span><span><b>SCENES</b>@Item.Scenes.Count</span></div>
+<div class="scene-list">
+@foreach(var scene in Item.Scenes.OrderBy(x=>x.SceneNumber)){
+<article class="scene-detail">
+<div class="scene-heading"><span class="scene-number">@scene.SceneNumber.ToString("00")</span><div><span class="eyebrow">SCENE @scene.SceneNumber</span><h2>@scene.Title</h2></div></div>
+@if(!string.IsNullOrWhiteSpace(scene.ReferenceImage)){<div class="scene-reference"><img src="@scene.ReferenceImage" alt="Reference for @scene.Title" onerror="this.style.display='none'"/><span>IMAGE REFERENCE</span></div>}
+<div class="scene-prompts">
+<div class="detail-panel"><h3>Image prompt</h3><pre class="prompt-text">@scene.ImagePrompt</pre><button class="button button-outline" @onclick="()=>Copy(scene.ImagePrompt)">Copy image prompt ⧉</button></div>
+<div class="detail-panel"><h3>Video prompt</h3><pre class="prompt-text">@scene.VideoPrompt</pre><button class="button button-outline" @onclick="()=>Copy(scene.VideoPrompt)">Copy video prompt ⧉</button></div>
+</div>
+<div class="movement-grid"><div><b>SUBJECT MOVEMENT</b><p>@scene.SubjectMovement</p></div><div><b>CAMERA MOVEMENT</b><p>@scene.CameraMovement</p></div></div>
+</article>}
+</div>
+<button class="button button-primary" @onclick="CopyAll">Copy complete workflow ⧉</button><span class="copy-note">@Message</span>
+}
+</section>
+@code {
+[Parameter] public string Id{get;set;}="";
+private Saurabh.AICreativeHub.Web.Models.VideoPrompt? Item;
+private string Message="";
+protected override async Task OnParametersSetAsync()=>Item=(await ContentRepository.GetVideoPromptsAsync()).FirstOrDefault(x=>x.Id==Id);
+private async Task Copy(string value){await JS.InvokeVoidAsync("navigator.clipboard.writeText",value);Message="Copied to clipboard.";}
+private async Task CopyAll(){if(Item is null)return;var all=$"{Item.Title}\nTool: {Item.Tool}\nDuration: {Item.DurationSeconds}s · {Item.AspectRatio}\n\n"+string.Join("\n\n",Item.Scenes.OrderBy(x=>x.SceneNumber).Select(s=>$"SCENE {s.SceneNumber}: {s.Title}\nIMAGE PROMPT: {s.ImagePrompt}\nVIDEO PROMPT: {s.VideoPrompt}\nSUBJECT MOVEMENT: {s.SubjectMovement}\nCAMERA MOVEMENT: {s.CameraMovement}"));await Copy(all);}
+}
